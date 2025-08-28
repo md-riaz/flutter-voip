@@ -16,54 +16,74 @@ public final class GeneratedPluginRegistrant {
   private static final String TAG = "GeneratedPluginRegistrant";
   public static void registerWith(@NonNull FlutterEngine flutterEngine) {
     try {
-      flutterEngine.getPlugins().add(new me.carda.awesome_notifications.AwesomeNotificationsPlugin());
-    } catch(Exception e) {
-      Log.e(TAG, "Error registering plugin awesome_notifications, me.carda.awesome_notifications.AwesomeNotificationsPlugin", e);
+      flutterEngine.getPlugins().add(new dev.fluttercommunity.plus.connectivity.ConnectivityPlugin());
+    } catch (Exception e) {
+      Log.e(TAG, "Error registering plugin connectivity_plus, dev.fluttercommunity.plus.connectivity.ConnectivityPlugin", e);
     }
     try {
-      flutterEngine.getPlugins().add(new com.github.cloudwebrtc.flutter_callkeep.FlutterCallkeepPlugin());
-    } catch(Exception e) {
-      Log.e(TAG, "Error registering plugin callkeep, com.github.cloudwebrtc.flutter_callkeep.FlutterCallkeepPlugin", e);
+      flutterEngine.getPlugins().add(new dev.fluttercommunity.plus.device_info.DeviceInfoPlusPlugin());
+    } catch (Exception e) {
+      Log.e(TAG, "Error registering plugin device_info_plus, dev.fluttercommunity.plus.device_info.DeviceInfoPlusPlugin", e);
+    }
+    try {
+      flutterEngine.getPlugins().add(new com.wescj.eraser.EraserPlugin());
+    } catch (Exception e) {
+      Log.e(TAG, "Error registering plugin eraser, com.wescj.eraser.EraserPlugin", e);
     }
     try {
       flutterEngine.getPlugins().add(new io.flutter.plugins.firebase.core.FlutterFirebaseCorePlugin());
-    } catch(Exception e) {
+    } catch (Exception e) {
       Log.e(TAG, "Error registering plugin firebase_core, io.flutter.plugins.firebase.core.FlutterFirebaseCorePlugin", e);
     }
     try {
       flutterEngine.getPlugins().add(new io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingPlugin());
-    } catch(Exception e) {
+    } catch (Exception e) {
       Log.e(TAG, "Error registering plugin firebase_messaging, io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingPlugin", e);
     }
     try {
-      flutterEngine.getPlugins().add(new changjoopark.com.flutter_foreground_plugin.FlutterForegroundPlugin());
-    } catch(Exception e) {
-      Log.e(TAG, "Error registering plugin flutter_foreground_plugin, changjoopark.com.flutter_foreground_plugin.FlutterForegroundPlugin", e);
+      flutterEngine.getPlugins().add(new com.hiennv.flutter_callkit_incoming.FlutterCallkitIncomingPlugin());
+    } catch (Exception e) {
+      Log.e(TAG, "Error registering plugin flutter_callkit_incoming_timer, com.hiennv.flutter_callkit_incoming.FlutterCallkitIncomingPlugin", e);
     }
     try {
-      flutterEngine.getPlugins().add(new com.dexterous.flutterlocalnotifications.FlutterLocalNotificationsPlugin());
-    } catch(Exception e) {
-      Log.e(TAG, "Error registering plugin flutter_local_notifications, com.dexterous.flutterlocalnotifications.FlutterLocalNotificationsPlugin", e);
+      flutterEngine.getPlugins().add(new com.vicolo.flutter_show_when_locked.FlutterShowWhenLockedPlugin());
+    } catch (Exception e) {
+      Log.e(TAG, "Error registering plugin flutter_show_when_locked, com.vicolo.flutter_show_when_locked.FlutterShowWhenLockedPlugin", e);
+    }
+    try {
+      flutterEngine.getPlugins().add(new com.example.flutter_voip.PluginVoipPlugin());
+    } catch (Exception e) {
+      Log.e(TAG, "Error registering plugin flutter_voip, com.example.flutter_voip.PluginVoipPlugin", e);
     }
     try {
       flutterEngine.getPlugins().add(new com.cloudwebrtc.webrtc.FlutterWebRTCPlugin());
-    } catch(Exception e) {
+    } catch (Exception e) {
       Log.e(TAG, "Error registering plugin flutter_webrtc, com.cloudwebrtc.webrtc.FlutterWebRTCPlugin", e);
     }
     try {
+      flutterEngine.getPlugins().add(new dev.fluttercommunity.plus.network_info.NetworkInfoPlusPlugin());
+    } catch (Exception e) {
+      Log.e(TAG, "Error registering plugin network_info_plus, dev.fluttercommunity.plus.network_info.NetworkInfoPlusPlugin", e);
+    }
+    try {
+      flutterEngine.getPlugins().add(new dev.fluttercommunity.plus.packageinfo.PackageInfoPlugin());
+    } catch (Exception e) {
+      Log.e(TAG, "Error registering plugin package_info_plus, dev.fluttercommunity.plus.packageinfo.PackageInfoPlugin", e);
+    }
+    try {
       flutterEngine.getPlugins().add(new io.flutter.plugins.pathprovider.PathProviderPlugin());
-    } catch(Exception e) {
+    } catch (Exception e) {
       Log.e(TAG, "Error registering plugin path_provider_android, io.flutter.plugins.pathprovider.PathProviderPlugin", e);
     }
     try {
-      flutterEngine.getPlugins().add(new com.pitel.flutter_pitel_voip.PluginPitelPlugin());
-    } catch(Exception e) {
-      Log.e(TAG, "Error registering plugin flutter_pitel_voip, com.pitel.flutter_pitel_voip.PluginPitelPlugin", e);
+      flutterEngine.getPlugins().add(new io.flutter.plugins.sharedpreferences.SharedPreferencesPlugin());
+    } catch (Exception e) {
+      Log.e(TAG, "Error registering plugin shared_preferences_android, io.flutter.plugins.sharedpreferences.SharedPreferencesPlugin", e);
     }
     try {
-      flutterEngine.getPlugins().add(new io.flutter.plugins.sharedpreferences.SharedPreferencesPlugin());
-    } catch(Exception e) {
-      Log.e(TAG, "Error registering plugin shared_preferences_android, io.flutter.plugins.sharedpreferences.SharedPreferencesPlugin", e);
+      flutterEngine.getPlugins().add(new dev.fluttercommunity.plus.wakelock.WakelockPlusPlugin());
+    } catch (Exception e) {
+      Log.e(TAG, "Error registering plugin wakelock_plus, dev.fluttercommunity.plus.wakelock.WakelockPlusPlugin", e);
     }
   }
 }

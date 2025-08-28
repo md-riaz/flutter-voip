@@ -6,16 +6,22 @@
 
 #import "GeneratedPluginRegistrant.h"
 
-#if __has_include(<awesome_notifications/AwesomeNotificationsPlugin.h>)
-#import <awesome_notifications/AwesomeNotificationsPlugin.h>
+#if __has_include(<connectivity_plus/ConnectivityPlusPlugin.h>)
+#import <connectivity_plus/ConnectivityPlusPlugin.h>
 #else
-@import awesome_notifications;
+@import connectivity_plus;
 #endif
 
-#if __has_include(<callkeep/FlutterCallkeepPlugin.h>)
-#import <callkeep/FlutterCallkeepPlugin.h>
+#if __has_include(<device_info_plus/FPPDeviceInfoPlusPlugin.h>)
+#import <device_info_plus/FPPDeviceInfoPlusPlugin.h>
 #else
-@import callkeep;
+@import device_info_plus;
+#endif
+
+#if __has_include(<eraser/EraserPlugin.h>)
+#import <eraser/EraserPlugin.h>
+#else
+@import eraser;
 #endif
 
 #if __has_include(<firebase_core/FLTFirebaseCorePlugin.h>)
@@ -30,10 +36,16 @@
 @import firebase_messaging;
 #endif
 
-#if __has_include(<flutter_local_notifications/FlutterLocalNotificationsPlugin.h>)
-#import <flutter_local_notifications/FlutterLocalNotificationsPlugin.h>
+#if __has_include(<flutter_callkit_incoming_timer/FlutterCallkitIncomingPlugin.h>)
+#import <flutter_callkit_incoming_timer/FlutterCallkitIncomingPlugin.h>
 #else
-@import flutter_local_notifications;
+@import flutter_callkit_incoming_timer;
+#endif
+
+#if __has_include(<flutter_voip/PluginVoipPlugin.h>)
+#import <flutter_voip/PluginVoipPlugin.h>
+#else
+@import flutter_voip;
 #endif
 
 #if __has_include(<flutter_webrtc/FlutterWebRTCPlugin.h>)
@@ -42,36 +54,52 @@
 @import flutter_webrtc;
 #endif
 
-#if __has_include(<path_provider_ios/FLTPathProviderPlugin.h>)
-#import <path_provider_ios/FLTPathProviderPlugin.h>
+#if __has_include(<network_info_plus/FPPNetworkInfoPlusPlugin.h>)
+#import <network_info_plus/FPPNetworkInfoPlusPlugin.h>
 #else
-@import path_provider_ios;
+@import network_info_plus;
 #endif
 
-#if __has_include(<flutter_pitel_voip/PluginPitelPlugin.h>)
-#import <flutter_pitel_voip/PluginPitelPlugin.h>
+#if __has_include(<package_info_plus/FPPPackageInfoPlusPlugin.h>)
+#import <package_info_plus/FPPPackageInfoPlusPlugin.h>
 #else
-@import flutter_pitel_voip;
+@import package_info_plus;
 #endif
 
-#if __has_include(<shared_preferences_ios/FLTSharedPreferencesPlugin.h>)
-#import <shared_preferences_ios/FLTSharedPreferencesPlugin.h>
+#if __has_include(<path_provider_foundation/PathProviderPlugin.h>)
+#import <path_provider_foundation/PathProviderPlugin.h>
 #else
-@import shared_preferences_ios;
+@import path_provider_foundation;
+#endif
+
+#if __has_include(<shared_preferences_foundation/SharedPreferencesPlugin.h>)
+#import <shared_preferences_foundation/SharedPreferencesPlugin.h>
+#else
+@import shared_preferences_foundation;
+#endif
+
+#if __has_include(<wakelock_plus/WakelockPlusPlugin.h>)
+#import <wakelock_plus/WakelockPlusPlugin.h>
+#else
+@import wakelock_plus;
 #endif
 
 @implementation GeneratedPluginRegistrant
 
 + (void)registerWithRegistry:(NSObject<FlutterPluginRegistry>*)registry {
-  [AwesomeNotificationsPlugin registerWithRegistrar:[registry registrarForPlugin:@"AwesomeNotificationsPlugin"]];
-  [FlutterCallkeepPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterCallkeepPlugin"]];
+  [ConnectivityPlusPlugin registerWithRegistrar:[registry registrarForPlugin:@"ConnectivityPlusPlugin"]];
+  [FPPDeviceInfoPlusPlugin registerWithRegistrar:[registry registrarForPlugin:@"FPPDeviceInfoPlusPlugin"]];
+  [EraserPlugin registerWithRegistrar:[registry registrarForPlugin:@"EraserPlugin"]];
   [FLTFirebaseCorePlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseCorePlugin"]];
   [FLTFirebaseMessagingPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseMessagingPlugin"]];
-  [FlutterLocalNotificationsPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterLocalNotificationsPlugin"]];
+  [FlutterCallkitIncomingPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterCallkitIncomingPlugin"]];
+  [PluginVoipPlugin registerWithRegistrar:[registry registrarForPlugin:@"PluginVoipPlugin"]];
   [FlutterWebRTCPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterWebRTCPlugin"]];
-  [FLTPathProviderPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTPathProviderPlugin"]];
-  [PluginPitelPlugin registerWithRegistrar:[registry registrarForPlugin:@"PluginPitelPlugin"]];
-  [FLTSharedPreferencesPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTSharedPreferencesPlugin"]];
+  [FPPNetworkInfoPlusPlugin registerWithRegistrar:[registry registrarForPlugin:@"FPPNetworkInfoPlusPlugin"]];
+  [FPPPackageInfoPlusPlugin registerWithRegistrar:[registry registrarForPlugin:@"FPPPackageInfoPlusPlugin"]];
+  [PathProviderPlugin registerWithRegistrar:[registry registrarForPlugin:@"PathProviderPlugin"]];
+  [SharedPreferencesPlugin registerWithRegistrar:[registry registrarForPlugin:@"SharedPreferencesPlugin"]];
+  [WakelockPlusPlugin registerWithRegistrar:[registry registrarForPlugin:@"WakelockPlusPlugin"]];
 }
 
 @end
