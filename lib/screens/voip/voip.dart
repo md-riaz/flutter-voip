@@ -1,0 +1,68 @@
+import 'dart:io';
+import 'package:flutter_callkit_incoming_timer/entities/call_event.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_voip/voip_sdk/voip_call.dart';
+import 'package:flutter_voip/voip_sdk/voip_client.dart';
+import 'package:flutter_voip/voip_push/voip_notif.dart';
+import 'package:flutter_show_when_locked/flutter_show_when_locked.dart';
+
+class VoipApp extends StatefulWidget {
+  final VoidCallback handleRegister;
+  final VoidCallback handleRegisterCall;
+  final Widget child;
+
+  const VoipApp({
+    Key? key,
+    required this.handleRegister,
+    required this.child,
+    required this.handleRegisterCall,
+  }) : super(key: key);
+
+  @override
+  State<VoipApp> createState() => _VoipAppState();
+}
+
+class _VoipAppState extends State<VoipApp> {
+  VoipClient pitelClient = VoipClient.getInstance();
+
+  final VoipCall pitelCall = VoipClient.getInstance().pitelCall;
+  bool isCall = false;
+  bool firstShowLock = false;
+
+  @override
+  void initState() {
+    super.initState();
+    VoipNotifService.listenerEvent(
+      callback: (event) {},
+      onCallAccept: () async {
+        if (firstShowLock && Platform.isAndroid) {
+          await FlutterShowWhenLocked().show();
+        }
+        EasyLoading.show(status: "Connecting...");
+        widget.handleRegisterCall();
+      },
+      onCallDecline: (CallEvent event) {},
+      onCallEnd: () {
+        pitelCall.hangup();
+      },
+    );
+    //! WARNING
+    initRegister();
+  }
+
+  void initRegister() async {
+    if (Platform.isAndroid) {
+      await FlutterShowWhenLocked().show();
+      setState(() {
+        firstShowLock = true;
+      });
+      widget.handleRegister();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return widget.child;
+  }
+}

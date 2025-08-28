@@ -1,0 +1,21 @@
+name: flutter_voip_example
+description: Minimal demo SIP app using flutter_voip
+publish_to: 'none'
+
+environment:
+  sdk: ">=2.17.0 <4.0.0"
+  flutter: ">=3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_voip:
+    path: ../
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+
