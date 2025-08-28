@@ -81,11 +81,11 @@ class Contact {
  * @throws {DartSIP.Exceptions.ConfigurationError} If a configuration parameter is invalid.
  * @throws {TypeError} If no configuration is given.
  */
-class PitelUA extends EventManager {
-  PitelUA(PitelSipSettings? configuration) {
+class VoipUA extends EventManager {
+  VoipUA(SipCoreSettings? configuration) {
     logger.debug('new() [configuration:${configuration.toString()}]');
 
-    _configuration = PitelSipSettings();
+    _configuration = SipCoreSettings();
     _dynConfiguration = DynamicSettings();
     _dialogs = <String, Dialog>{};
 
@@ -119,7 +119,7 @@ class PitelUA extends EventManager {
     _registrator = Registrator(this);
   }
 
-  PitelSipSettings? _configuration;
+  SipCoreSettings? _configuration;
   DynamicSettings? _dynConfiguration;
   late Map<String, Dialog> _dialogs;
   late Set<Message> _applicants;
@@ -135,7 +135,7 @@ class PitelUA extends EventManager {
 
   Contact? get contact => _contact;
 
-  PitelSipSettings? get configuration => _configuration;
+  SipCoreSettings? get configuration => _configuration;
 
   Transport? get transport => _transport;
 
@@ -690,7 +690,7 @@ class PitelUA extends EventManager {
     }
   }
 
-  void _loadConfig(PitelSipSettings configuration) {
+  void _loadConfig(SipCoreSettings configuration) {
     // Check and load the given configuration.
     try {
       config.load(configuration, _configuration);
@@ -873,3 +873,5 @@ class PitelUA extends EventManager {
     }
   }
 }
+
+// (breaking change) Class renamed to VoipUA

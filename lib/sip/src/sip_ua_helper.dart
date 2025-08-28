@@ -5,7 +5,7 @@ import 'event_manager/event_manager.dart';
 import 'message.dart';
 import 'rtc_session.dart';
 
-enum PitelCallStateEnum {
+enum VoipCallStateEnum {
   NONE,
   STREAM,
   UNMUTED,
@@ -30,7 +30,7 @@ class Call {
   String? get id => _id;
   RTCPeerConnection? get peerConnection => _session.connection;
   RTCSession get session => _session;
-  PitelCallStateEnum state;
+  VoipCallStateEnum state;
 
   void answer(Map<String, dynamic> options, {MediaStream? mediaStream = null}) {
     assert(_session != null, 'ERROR(answer): rtc session is invalid!');
@@ -161,15 +161,15 @@ class Call {
   }
 }
 
-class PitelCallState {
-  PitelCallState(this.state,
+class VoipCallState {
+  VoipCallState(this.state,
       {this.originator,
       this.audio = false,
       this.video = false,
       this.stream,
       this.cause,
       this.refer});
-  PitelCallStateEnum state;
+  VoipCallStateEnum state;
   ErrorCause? cause;
   String? originator;
   bool audio;
@@ -198,8 +198,8 @@ enum TransportStateEnum {
   DISCONNECTED,
 }
 
-class PitelTransportState {
-  PitelTransportState(this.state, {this.cause});
+class VoipTransportState {
+  VoipTransportState(this.state, {this.cause});
   TransportStateEnum state;
   ErrorCause? cause;
 }
@@ -212,9 +212,9 @@ class SIPMessageRequest {
 }
 
 abstract class SipUaHelperListener {
-  void transportStateChanged(PitelTransportState state);
+  void transportStateChanged(VoipTransportState state);
   void registrationStateChanged(RegistrationState state);
-  void callStateChanged(Call call, PitelCallState state);
+  void callStateChanged(Call call, VoipCallState state);
   //For SIP messaga coming
   void onNewMessage(SIPMessageRequest msg);
 }
@@ -248,7 +248,7 @@ enum DtmfMode {
   RFC2833,
 }
 
-class PitelSettings {
+class VoipSettings {
   late String webSocketUrl;
   WebSocketSettings webSocketSettings = WebSocketSettings();
 

@@ -12,7 +12,7 @@ import 'uri.dart';
 import 'utils.dart' as Utils;
 
 class Message extends EventManager {
-  Message(PitelUA ua) {
+  Message(VoipUA ua) {
     _ua = ua;
     _request = null;
     _closed = false;
@@ -28,7 +28,7 @@ class Message extends EventManager {
     _data = <String, dynamic>{};
   }
 
-  PitelUA? _ua;
+  VoipUA? _ua;
   dynamic _request;
   bool? _closed;
   String? _direction;

@@ -36,8 +36,8 @@ class CallPageWidget extends StatefulWidget {
 
   final VoipCall _pitelCall = VoipClient.getInstance().pitelCall;
   final bool receivedBackground;
-  final PitelCallStateEnum callState;
-  final Function(PitelCallStateEnum) onCallState;
+  final VoipCallStateEnum callState;
+  final Function(VoipCallStateEnum) onCallState;
   final String txtMute;
   final String txtUnMute;
   final String txtSpeaker;
@@ -64,7 +64,7 @@ class _MyCallPageWidget extends State<CallPageWidget>
   bool _speakerOn = false;
   bool calling = false;
   bool _isBacked = false;
-  PitelCallStateEnum _state = PitelCallStateEnum.NONE;
+  VoipCallStateEnum _state = VoipCallStateEnum.NONE;
   bool isStartTimer = false;
 
   bool get voiceonly => pitelCall.isVoiceOnly();
@@ -249,26 +249,26 @@ class _MyCallPageWidget extends State<CallPageWidget>
         direction == 'OUTGOING' ? _renderAdvanceAction() : <Widget>[];
 
     switch (_state) {
-      case PitelCallStateEnum.NONE:
-      case PitelCallStateEnum.PROGRESS:
+      case VoipCallStateEnum.NONE:
+      case VoipCallStateEnum.PROGRESS:
         if (direction == 'OUTGOING') {
           basicActions = [hangupBtn];
         }
         break;
-      case PitelCallStateEnum.STREAM:
+      case VoipCallStateEnum.STREAM:
         advanceActions = _renderAdvanceAction();
         basicActions = [hangupBtn];
         break;
-      case PitelCallStateEnum.CONNECTING:
-      case PitelCallStateEnum.MUTED:
-      case PitelCallStateEnum.UNMUTED:
-      case PitelCallStateEnum.ACCEPTED:
-      case PitelCallStateEnum.CONFIRMED:
-      case PitelCallStateEnum.FAILED:
+      case VoipCallStateEnum.CONNECTING:
+      case VoipCallStateEnum.MUTED:
+      case VoipCallStateEnum.UNMUTED:
+      case VoipCallStateEnum.ACCEPTED:
+      case VoipCallStateEnum.CONFIRMED:
+      case VoipCallStateEnum.FAILED:
         advanceActions = _renderAdvanceAction();
         basicActions = [hangupBtn];
         break;
-      case PitelCallStateEnum.ENDED:
+      case VoipCallStateEnum.ENDED:
         basicActions = [hangupBtnInactive];
         break;
       default:
@@ -412,41 +412,41 @@ class _MyCallPageWidget extends State<CallPageWidget>
   }
 
   @override
-  void callStateChanged(String callId, PitelCallState callState) {
+  void callStateChanged(String callId, VoipCallState callState) {
     setState(() {
       _state = callState.state;
     });
     widget.onCallState(callState.state);
     switch (callState.state) {
-      case PitelCallStateEnum.HOLD:
-      case PitelCallStateEnum.UNHOLD:
+      case VoipCallStateEnum.HOLD:
+      case VoipCallStateEnum.UNHOLD:
         break;
-      case PitelCallStateEnum.MUTED:
-      case PitelCallStateEnum.UNMUTED:
+      case VoipCallStateEnum.MUTED:
+      case VoipCallStateEnum.UNMUTED:
         break;
-      case PitelCallStateEnum.STREAM:
+      case VoipCallStateEnum.STREAM:
         // _handelStreams(callState);
         break;
-      case PitelCallStateEnum.ENDED:
+      case VoipCallStateEnum.ENDED:
         break;
-      case PitelCallStateEnum.FAILED:
+      case VoipCallStateEnum.FAILED:
         break;
-      case PitelCallStateEnum.CONNECTING:
-      case PitelCallStateEnum.PROGRESS:
-      case PitelCallStateEnum.CONFIRMED:
+      case VoipCallStateEnum.CONNECTING:
+      case VoipCallStateEnum.PROGRESS:
+      case VoipCallStateEnum.CONFIRMED:
         setState(() {
           _callId = callId;
         });
         break;
-      case PitelCallStateEnum.ACCEPTED:
+      case VoipCallStateEnum.ACCEPTED:
         setState(() {
           _callId = callId;
           isStartTimer = true;
         });
         break;
-      case PitelCallStateEnum.NONE:
-      case PitelCallStateEnum.CALL_INITIATION:
-      case PitelCallStateEnum.REFER:
+      case VoipCallStateEnum.NONE:
+      case VoipCallStateEnum.CALL_INITIATION:
+      case VoipCallStateEnum.REFER:
         break;
     }
   }
@@ -458,7 +458,7 @@ class _MyCallPageWidget extends State<CallPageWidget>
   void registrationStateChanged(VoipRegistrationState state) {}
 
   @override
-  void transportStateChanged(PitelTransportState state) {}
+  void transportStateChanged(VoipTransportState state) {}
 
   @override
   void onCallReceived(String callId) {}

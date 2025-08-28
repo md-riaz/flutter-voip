@@ -27,10 +27,10 @@ const List<bool Function()> responses = <bool Function()>[
 
 // local variables.
 late IncomingMessage message;
-late PitelUA ua;
+late VoipUA ua;
 late Transport transport;
 
-bool sanityCheck(IncomingMessage m, PitelUA u, Transport t) {
+bool sanityCheck(IncomingMessage m, VoipUA u, Transport t) {
   message = m;
   ua = u;
   transport = t;

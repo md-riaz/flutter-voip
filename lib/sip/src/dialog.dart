@@ -92,7 +92,7 @@ class Dialog {
   }
 
   RTCSession? _owner;
-  PitelUA? _ua;
+  VoipUA? _ua;
   bool uac_pending_reply = false;
   bool uas_pending_reply = false;
   int? _state;
@@ -105,7 +105,7 @@ class Dialog {
   Id? _id;
   num? local_seqnum;
 
-  PitelUA? get ua => _ua;
+  VoipUA? get ua => _ua;
   Id? get id => _id;
 
   RTCSession? get owner => _owner;

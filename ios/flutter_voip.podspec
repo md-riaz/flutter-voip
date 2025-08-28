@@ -3,7 +3,7 @@
 # Run `pod lib lint flutter_pitel_voip.podspec` to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'flutter_pitel_voip'
+  s.name             = 'flutter_voip'
   s.version          = '0.0.1'
   s.summary          = 'A new flutter plugin project.'
   s.description      = <<-DESC

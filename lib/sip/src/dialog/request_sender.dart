@@ -21,7 +21,7 @@ class DialogRequestSender {
     _reattempt = false;
   }
   late Dialog _dialog;
-  late PitelUA _ua;
+  late VoipUA _ua;
   late OutgoingRequest _request;
   late EventManager _eventHandlers;
   late bool _reattempt;

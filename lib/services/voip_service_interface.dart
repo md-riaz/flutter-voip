@@ -5,11 +5,11 @@ import 'models/push_notif_params.dart';
 import 'sip_info_data.dart';
 
 abstract class VoipService {
-  Future<PitelSettings> setExtensionInfo(
+  Future<VoipSettings> setExtensionInfo(
     SipInfoData sipInfoData,
     PushNotifParams pushNotifParams,
   );
-  Future<PitelSettings> registerSipWithoutFCM(
+  Future<VoipSettings> registerSipWithoutFCM(
     PnPushParams pnPushParams,
   );
 }

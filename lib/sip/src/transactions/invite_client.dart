@@ -13,7 +13,7 @@ import '../utils.dart';
 import 'transaction_base.dart';
 
 class InviteClientTransaction extends TransactionBase {
-  InviteClientTransaction(PitelUA ua, Transport transport,
+  InviteClientTransaction(VoipUA ua, Transport transport,
       OutgoingRequest request, EventManager eventHandlers) {
     id = 'z9hG4bK${Math.floor(Math.random() * 10000000)}';
     this.ua = ua;

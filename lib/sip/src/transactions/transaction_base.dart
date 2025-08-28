@@ -16,7 +16,7 @@ enum TransactionState {
 
 abstract class TransactionBase extends EventManager {
   String? id;
-  PitelUA? ua;
+  VoipUA? ua;
   Transport? transport;
   TransactionState? state;
   IncomingMessage? last_response;

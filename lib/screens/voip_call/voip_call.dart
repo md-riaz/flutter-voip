@@ -12,7 +12,7 @@ class VoipCallWidget extends StatefulWidget {
   final VoidCallback goBack;
   final VoidCallback goToCall;
   final Function(String) onRegisterState;
-  final Function(PitelCallStateEnum) onCallState;
+  final Function(VoipCallStateEnum) onCallState;
   final Widget child;
   final String bundleId;
   final SipInfoData? sipInfoData;
@@ -66,11 +66,11 @@ class _MyVoipCallWidget extends State<VoipCallWidget>
   void onNewMessage(VoipSIPMessageRequest msg) {}
 
   @override
-  void callStateChanged(String callId, PitelCallState state) async {
+  void callStateChanged(String callId, VoipCallState state) async {
     widget.onCallState(state.state);
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    if (state.state == PitelCallStateEnum.ENDED) {
+    if (state.state == VoipCallStateEnum.ENDED) {
       pitelCall.resetOutPhone();
       pitelCall.resetNameCaller();
       pitelCall.setIsHoldCall(false);
@@ -80,16 +80,16 @@ class _MyVoipCallWidget extends State<VoipCallWidget>
       }
       widget.goBack();
     }
-    if (state.state == PitelCallStateEnum.FAILED) {
+    if (state.state == VoipCallStateEnum.FAILED) {
       pitelCall.resetOutPhone();
       pitelCall.resetNameCaller();
       pitelCall.setIsHoldCall(false);
       widget.goBack();
     }
-    if (state.state == PitelCallStateEnum.STREAM) {
+    if (state.state == VoipCallStateEnum.STREAM) {
       pitelCall.enableSpeakerphone(false);
     }
-    if (state.state == PitelCallStateEnum.ACCEPTED) {
+    if (state.state == VoipCallStateEnum.ACCEPTED) {
       pitelCall.setIsHoldCall(true);
       if (Platform.isAndroid) {
         Eraser.clearAllAppNotifications();
@@ -98,7 +98,7 @@ class _MyVoipCallWidget extends State<VoipCallWidget>
   }
 
   @override
-  void transportStateChanged(PitelTransportState state) {}
+  void transportStateChanged(VoipTransportState state) {}
 
   @override
   void onCallReceived(String callId) async {

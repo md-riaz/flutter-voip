@@ -1,10 +1,10 @@
 import Flutter
 import UIKit
 
-public class SwiftPluginPitelPlugin: NSObject, FlutterPlugin {
+public class SwiftPluginVoipPlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
-    let channel = FlutterMethodChannel(name: "flutter_pitel_voip", binaryMessenger: registrar.messenger())
-    let instance = SwiftPluginPitelPlugin()
+    let channel = FlutterMethodChannel(name: "flutter_voip", binaryMessenger: registrar.messenger())
+    let instance = SwiftPluginVoipPlugin()
     registrar.addMethodCallDelegate(instance, channel: channel)
   }
 

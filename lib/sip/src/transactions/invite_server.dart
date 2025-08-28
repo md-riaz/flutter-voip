@@ -10,7 +10,7 @@ import 'transaction_base.dart';
 
 class InviteServerTransaction extends TransactionBase {
   InviteServerTransaction(
-      PitelUA ua, Transport? transport, IncomingRequest request) {
+      VoipUA ua, Transport? transport, IncomingRequest request) {
     id = request.via_branch;
     this.ua = ua;
     this.transport = transport;

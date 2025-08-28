@@ -5,8 +5,8 @@ import 'call_page.dart';
 
 class CallScreen extends StatelessWidget {
   final Color bgColor;
-  final PitelCallStateEnum callState;
-  final Function(PitelCallStateEnum) onCallState;
+  final VoipCallStateEnum callState;
+  final Function(VoipCallStateEnum) onCallState;
   final String? txtMute;
   final String? txtUnMute;
   final String? txtSpeaker;

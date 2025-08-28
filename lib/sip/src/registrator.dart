@@ -24,7 +24,7 @@ class UnHandledResponse {
 }
 
 class Registrator {
-  Registrator(PitelUA ua, [Transport? transport]) {
+  Registrator(VoipUA ua, [Transport? transport]) {
     int regId = 1; // Force reg_id to 1.
 
     _ua = ua;
@@ -66,7 +66,7 @@ class Registrator {
     _contact += ';+sip.instance="<urn:uuid:${_ua!.configuration!.instanceId}>"';
   }
 
-  PitelUA? _ua;
+  VoipUA? _ua;
   Transport? _transport;
   URI? _registrar;
   int? _expires;

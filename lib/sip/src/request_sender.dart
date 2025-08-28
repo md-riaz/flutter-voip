@@ -16,7 +16,7 @@ import 'ua.dart';
 
 class RequestSender {
   RequestSender(
-      PitelUA ua, OutgoingRequest request, EventManager eventHandlers) {
+      VoipUA ua, OutgoingRequest request, EventManager eventHandlers) {
     _ua = ua;
     _eventHandlers = eventHandlers;
     _method = request.method;
@@ -31,7 +31,7 @@ class RequestSender {
       _eventHandlers.emit(EventOnTransportError());
     }
   }
-  late PitelUA _ua;
+  late VoipUA _ua;
   late EventManager _eventHandlers;
   SipMethod? _method;
   OutgoingRequest? _request;

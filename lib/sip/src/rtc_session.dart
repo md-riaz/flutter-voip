@@ -65,7 +65,7 @@ class RFC4028Timers {
 }
 
 class RTCSession extends EventManager {
-  RTCSession(PitelUA? ua) {
+  RTCSession(VoipUA? ua) {
     logger.debug('new');
 
     _id = null;
@@ -141,7 +141,7 @@ class RTCSession extends EventManager {
   }
 
   String? _id;
-  PitelUA? _ua;
+  VoipUA? _ua;
   dynamic _request;
   late bool _late_sdp;
   Map<String, dynamic>? _rtcOfferConstraints;
@@ -208,7 +208,7 @@ class RTCSession extends EventManager {
 
   DateTime? get end_time => _end_time;
 
-  PitelUA? get ua => _ua;
+  VoipUA? get ua => _ua;
 
   int? get status => _status;
 

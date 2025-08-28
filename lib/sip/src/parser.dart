@@ -8,7 +8,7 @@ import 'ua.dart';
 /**
  * Parse SIP Message
  */
-IncomingMessage? parseMessage(String data, PitelUA? ua) {
+IncomingMessage? parseMessage(String data, VoipUA? ua) {
   IncomingMessage message;
   int bodyStart;
   int headerEnd = data.indexOf('\r\n');

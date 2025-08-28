@@ -101,7 +101,7 @@ class OutgoingRequest {
     setHeader('cseq', '$cseq ${SipMethodHelper.getName(method)}');
   }
 
-  PitelUA? ua;
+  VoipUA? ua;
   Map<String?, dynamic> headers = <String?, dynamic>{};
   SipMethod? method;
   URI? ruri;
@@ -305,7 +305,7 @@ class OutgoingRequest {
 }
 
 class InitialOutgoingInviteRequest extends OutgoingRequest {
-  InitialOutgoingInviteRequest(URI? ruri, PitelUA? ua,
+  InitialOutgoingInviteRequest(URI? ruri, VoipUA? ua,
       [Map<String, dynamic>? params, List<dynamic>? extraHeaders, String? body])
       : super(SipMethod.INVITE, ruri, ua, params, extraHeaders, body) {
     transaction = null;
@@ -521,7 +521,7 @@ class IncomingRequest extends IncomingMessage {
     transport = null;
     server_transaction = null;
   }
-  PitelUA? ua;
+  VoipUA? ua;
   URI? ruri;
   Transport? transport;
   TransactionBase? server_transaction;

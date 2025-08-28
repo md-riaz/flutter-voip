@@ -1,4 +1,4 @@
-group 'com.pitel.flutter_pitel_voip'
+group 'com.example.flutter_voip'
 version '1.0-SNAPSHOT'
 
 buildscript {
@@ -25,7 +25,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    namespace "com.pitel.flutter_pitel_voip"
+    namespace "com.example.flutter_voip"
     compileSdkVersion 33
 
     compileOptions {

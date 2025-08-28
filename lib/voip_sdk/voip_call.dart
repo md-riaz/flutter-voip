@@ -27,7 +27,7 @@ class VoipCall implements SipUaHelperListener {
   MediaStream? _localStream;
   MediaStream? _remoteStream;
   final List<SipHelperListener> _sipPitelHelperListener = [];
-  final Map<String, PitelCallState> _states = {};
+  final Map<String, VoipCallState> _states = {};
   final VoipUAHelper _sipuaHelper = VoipUAHelper();
   bool _audioMuted = false;
   bool _isHoldCall = false;
@@ -153,13 +153,13 @@ class VoipCall implements SipUaHelperListener {
   }
 
   @override
-  void callStateChanged(Call call, PitelCallState pitelCallState) {
+  void callStateChanged(Call call, VoipCallState pitelCallState) {
     _logger.info('callStateChanged  ${pitelCallState.state.toString()}');
     _logger.info('callLocal ${call.local_identity}');
     _logger.info('callRemoter ${call.remote_identity}');
     _logger.info('callDirection ${call.direction}');
     switch (pitelCallState.state) {
-      case PitelCallStateEnum.CALL_INITIATION:
+      case VoipCallStateEnum.CALL_INITIATION:
         switch (call.direction) {
           case 'OUTGOING':
             for (var element in _sipPitelHelperListener) {
@@ -177,28 +177,28 @@ class VoipCall implements SipUaHelperListener {
             break;
         }
         break;
-      case PitelCallStateEnum.HOLD:
-      case PitelCallStateEnum.UNHOLD:
-        _holdCall = pitelCallState.state == PitelCallStateEnum.HOLD;
+      case VoipCallStateEnum.HOLD:
+      case VoipCallStateEnum.UNHOLD:
+        _holdCall = pitelCallState.state == VoipCallStateEnum.HOLD;
         _holdOriginator = pitelCallState.originator;
         // for (var element in _sipPitelHelperListener) {
         //   element.callStateChanged(call.id!, pitelCallState);
         // }
         break;
-      case PitelCallStateEnum.STREAM:
+      case VoipCallStateEnum.STREAM:
         _handelStreams(pitelCallState);
         for (var element in _sipPitelHelperListener) {
           element.callStateChanged(call.id!, pitelCallState);
         }
         break;
-      case PitelCallStateEnum.MUTED:
+      case VoipCallStateEnum.MUTED:
         if (pitelCallState.audio) _audioMuted = true;
         if (pitelCallState.video) _videoIsOff = true;
         for (var element in _sipPitelHelperListener) {
           element.callStateChanged(call.id!, pitelCallState);
         }
         break;
-      case PitelCallStateEnum.UNMUTED:
+      case VoipCallStateEnum.UNMUTED:
         if (pitelCallState.audio) _audioMuted = false;
         if (pitelCallState.video) _videoIsOff = false;
         for (var element in _sipPitelHelperListener) {
@@ -240,7 +240,7 @@ class VoipCall implements SipUaHelperListener {
     return EnumHelper.getName(_sipuaHelper.registerState.state);
   }
 
-  void _handelStreams(PitelCallState event) {
+  void _handelStreams(VoipCallState event) {
     final stream = event.stream;
     if (event.originator == 'local') {
       if (_localRenderer != null) {
@@ -548,13 +548,13 @@ class VoipCall implements SipUaHelperListener {
   }
 
   @override
-  void transportStateChanged(PitelTransportState state) {
+  void transportStateChanged(VoipTransportState state) {
     for (var element in _sipPitelHelperListener) {
       element.transportStateChanged(state);
     }
   }
 
-  void register(PitelSettings settings) {
+  void register(VoipSettings settings) {
     _sipuaHelper.start(settings);
   }
 

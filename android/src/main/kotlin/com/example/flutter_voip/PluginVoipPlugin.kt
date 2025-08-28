@@ -1,4 +1,4 @@
-package com.pitel.flutter_pitel_voip
+package com.example.flutter_voip
 
 import androidx.annotation.NonNull
 
@@ -9,7 +9,7 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 
 /** PluginPitelPlugin */
-class PluginPitelPlugin: FlutterPlugin, MethodCallHandler {
+class PluginVoipPlugin: FlutterPlugin, MethodCallHandler {
   /// The MethodChannel that will the communication between Flutter and native Android
   ///
   /// This local reference serves to register the plugin with the Flutter Engine and unregister it
@@ -17,7 +17,7 @@ class PluginPitelPlugin: FlutterPlugin, MethodCallHandler {
   private lateinit var channel : MethodChannel
 
   override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-    channel = MethodChannel(flutterPluginBinding.binaryMessenger, "flutter_pitel_voip")
+    channel = MethodChannel(flutterPluginBinding.binaryMessenger, "flutter_voip")
     channel.setMethodCallHandler(this)
   }
 

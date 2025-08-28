@@ -81,7 +81,7 @@ class _DemoHomePageState extends State<DemoHomePage>
       return;
     }
 
-    final settings = PitelSettings();
+    final settings = VoipSettings();
     settings.webSocketUrl = wss;
     settings.webSocketSettings.allowBadCertificate = true; // demo-friendly
     settings.uri = 'sip:$user@$domain:$port';
@@ -131,7 +131,7 @@ class _DemoHomePageState extends State<DemoHomePage>
 
   // SipUaHelperListener
   @override
-  void transportStateChanged(PitelTransportState state) {
+  void transportStateChanged(VoipTransportState state) {
     setState(() {
       _transport = state.state.toString().split('.').last;
     });
@@ -145,13 +145,13 @@ class _DemoHomePageState extends State<DemoHomePage>
   }
 
   @override
-  void callStateChanged(Call call, PitelCallState state) {
+  void callStateChanged(Call call, VoipCallState state) {
     setState(() {
       _currentCallId = call.id;
       _callState = state.state.toString().split('.').last;
       _incoming = call.direction.toUpperCase() == 'INCOMING';
-      if (state.state == PitelCallStateEnum.ENDED ||
-          state.state == PitelCallStateEnum.FAILED) {
+      if (state.state == VoipCallStateEnum.ENDED ||
+          state.state == VoipCallStateEnum.FAILED) {
         _incoming = false;
       }
     });
@@ -267,4 +267,3 @@ class _DemoHomePageState extends State<DemoHomePage>
     ScaffoldMessenger.of(context).showSnackBar(snack);
   }
 }
-

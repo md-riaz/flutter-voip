@@ -11,7 +11,7 @@ import 'uri.dart';
 import 'utils.dart' as utils;
 
 // Default settings.
-class PitelSipSettings {
+class SipCoreSettings {
   // SIP authentication.
   String? authorizationUser;
   String? password;
@@ -72,12 +72,14 @@ class PitelSipSettings {
   int ice_gathering_timeout = 500;
 }
 
+// (breaking change) Class renamed to SipCoreSettings
+
 // Configuration checks.
 class Checks {
-  Map<String, Null Function(PitelSipSettings src, PitelSipSettings? dst)>
+  Map<String, Null Function(SipCoreSettings src, SipCoreSettings? dst)>
       mandatory =
-      <String, Null Function(PitelSipSettings src, PitelSipSettings? dst)>{
-    'sockets': (PitelSipSettings src, PitelSipSettings? dst) {
+      <String, Null Function(SipCoreSettings src, SipCoreSettings? dst)>{
+    'sockets': (SipCoreSettings src, SipCoreSettings? dst) {
       List<WebSocketInterface>? sockets = src.sockets;
       /* Allow defining sockets parameter as:
        *  Socket: socket
@@ -98,7 +100,7 @@ class Checks {
 
       dst!.sockets = copy;
     },
-    'uri': (PitelSipSettings src, PitelSipSettings? dst) {
+    'uri': (SipCoreSettings src, SipCoreSettings? dst) {
       dynamic uri = src.uri;
       if (src.uri == null && dst!.uri == null) {
         throw exceptions.ConfigurationError('uri', null);
@@ -116,10 +118,10 @@ class Checks {
       }
     }
   };
-  Map<String, Null Function(PitelSipSettings src, PitelSipSettings? dst)>
+  Map<String, Null Function(SipCoreSettings src, SipCoreSettings? dst)>
       optional =
-      <String, Null Function(PitelSipSettings src, PitelSipSettings? dst)>{
-    'authorization_user': (PitelSipSettings src, PitelSipSettings? dst) {
+      <String, Null Function(SipCoreSettings src, SipCoreSettings? dst)>{
+    'authorization_user': (SipCoreSettings src, SipCoreSettings? dst) {
       String? authorizationUser = src.authorizationUser;
       if (authorizationUser == null) return;
       if (Grammar.parse('"$authorizationUser"', 'quoted_string') == -1) {
@@ -129,29 +131,29 @@ class Checks {
       }
     },
     //! sip_domain
-    'sip_domain': (PitelSipSettings src, PitelSipSettings? dst) {
+    'sip_domain': (SipCoreSettings src, SipCoreSettings? dst) {
       String sipDomain = src.sipDomain;
       dst!.sipDomain = sipDomain;
     },
-    'user_agent': (PitelSipSettings src, PitelSipSettings? dst) {
+    'user_agent': (SipCoreSettings src, SipCoreSettings? dst) {
       String userAgent = src.userAgent;
       dst!.userAgent = userAgent;
     },
     'connection_recovery_max_interval':
-        (PitelSipSettings src, PitelSipSettings? dst) {
+        (SipCoreSettings src, SipCoreSettings? dst) {
       int connectionRecoveryMaxInterval = src.connection_recovery_max_interval;
       if (connectionRecoveryMaxInterval > 0) {
         dst!.connection_recovery_max_interval = connectionRecoveryMaxInterval;
       }
     },
     'connection_recovery_min_interval':
-        (PitelSipSettings src, PitelSipSettings? dst) {
+        (SipCoreSettings src, SipCoreSettings? dst) {
       int connectionRecoveryMinInterval = src.connection_recovery_min_interval;
       if (connectionRecoveryMinInterval > 0) {
         dst!.connection_recovery_min_interval = connectionRecoveryMinInterval;
       }
     },
-    'contact_uri': (PitelSipSettings src, PitelSipSettings? dst) {
+    'contact_uri': (SipCoreSettings src, SipCoreSettings? dst) {
       dynamic contactUri = src.contactUri;
       if (contactUri == null) return;
       if (contactUri is String) {
@@ -161,12 +163,12 @@ class Checks {
         }
       }
     },
-    'display_name': (PitelSipSettings src, PitelSipSettings? dst) {
+    'display_name': (SipCoreSettings src, SipCoreSettings? dst) {
       String? displayName = src.displayName;
       if (displayName == null) return;
       dst!.displayName = displayName;
     },
-    'instance_id': (PitelSipSettings src, PitelSipSettings? dst) {
+    'instance_id': (SipCoreSettings src, SipCoreSettings? dst) {
       String? instanceId = src.instanceId;
       if (instanceId == null) return;
       if (instanceId.contains(RegExp(r'^uuid:', caseSensitive: false))) {
@@ -178,51 +180,51 @@ class Checks {
         dst!.instanceId = instanceId;
       }
     },
-    'no_answer_timeout': (PitelSipSettings src, PitelSipSettings? dst) {
+    'no_answer_timeout': (SipCoreSettings src, SipCoreSettings? dst) {
       int noAnswerTimeout = src.noAnswerTimeout;
       if (noAnswerTimeout > 0) {
         dst!.noAnswerTimeout = noAnswerTimeout;
       }
     },
-    'session_timers': (PitelSipSettings src, PitelSipSettings? dst) {
+    'session_timers': (SipCoreSettings src, SipCoreSettings? dst) {
       bool sessionTimers = src.sessionTimers;
       dst!.sessionTimers = sessionTimers;
     },
     'session_timers_refresh_method':
-        (PitelSipSettings src, PitelSipSettings? dst) {
+        (SipCoreSettings src, SipCoreSettings? dst) {
       SipMethod method = src.sessionTimersRefreshMethod;
       if (method == SipMethod.INVITE || method == SipMethod.UPDATE) {
         dst!.sessionTimersRefreshMethod = method;
       }
     },
-    'password': (PitelSipSettings src, PitelSipSettings? dst) {
+    'password': (SipCoreSettings src, SipCoreSettings? dst) {
       String? password = src.password;
       if (password == null) return;
       dst!.password = password.toString();
     },
-    'realm': (PitelSipSettings src, PitelSipSettings? dst) {
+    'realm': (SipCoreSettings src, SipCoreSettings? dst) {
       String? realm = src.realm;
       if (realm == null) return;
       dst!.realm = realm.toString();
     },
-    'ha1': (PitelSipSettings src, PitelSipSettings? dst) {
+    'ha1': (SipCoreSettings src, SipCoreSettings? dst) {
       String? ha1 = src.ha1;
       if (ha1 == null) return;
       dst!.ha1 = ha1.toString();
     },
-    'register': (PitelSipSettings src, PitelSipSettings? dst) {
+    'register': (SipCoreSettings src, SipCoreSettings? dst) {
       bool? register = src.register;
       if (register == null) return;
       dst!.register = register;
     },
-    'register_expires': (PitelSipSettings src, PitelSipSettings? dst) {
+    'register_expires': (SipCoreSettings src, SipCoreSettings? dst) {
       int? registerExpires = src.registerExpires;
       if (registerExpires == null) return;
       if (registerExpires > 0) {
         dst!.registerExpires = registerExpires;
       }
     },
-    'registrar_server': (PitelSipSettings src, PitelSipSettings? dst) {
+    'registrar_server': (SipCoreSettings src, SipCoreSettings? dst) {
       dynamic registrarServer = src.registrarServer;
       if (registrarServer == null) return;
       if (!registrarServer.contains(RegExp(r'^sip:', caseSensitive: false))) {
@@ -236,17 +238,17 @@ class Checks {
       }
     },
     'register_extra_contact_uri_params':
-        (PitelSipSettings src, PitelSipSettings? dst) {
+        (SipCoreSettings src, SipCoreSettings? dst) {
       Map<String, dynamic>? registerExtraContactUriParams =
           src.registerExtraContactUriParams;
       if (registerExtraContactUriParams == null) return;
       dst!.registerExtraContactUriParams = registerExtraContactUriParams;
     },
-    'use_preloaded_route': (PitelSipSettings src, PitelSipSettings? dst) {
+    'use_preloaded_route': (SipCoreSettings src, SipCoreSettings? dst) {
       bool usePreloadedRoute = src.usePreloadedRoute;
       dst!.usePreloadedRoute = usePreloadedRoute;
     },
-    'dtmf_mode': (PitelSipSettings src, PitelSipSettings? dst) {
+    'dtmf_mode': (SipCoreSettings src, SipCoreSettings? dst) {
       DtmfMode dtmfMode = src.dtmfMode;
       dst!.dtmfMode = dtmfMode;
     },
@@ -255,18 +257,18 @@ class Checks {
 
 final Checks checks = Checks();
 
-void load(PitelSipSettings src, PitelSipSettings? dst) {
+void load(SipCoreSettings src, SipCoreSettings? dst) {
   try {
     // Check Mandatory parameters.
     checks.mandatory.forEach((String parameter,
-        Null Function(PitelSipSettings, PitelSipSettings?) fun) {
+        Null Function(SipCoreSettings, SipCoreSettings?) fun) {
       logger.info('Check mandatory parameter => $parameter.');
       fun(src, dst);
     });
 
     // Check Optional parameters.
     checks.optional.forEach((String parameter,
-        Null Function(PitelSipSettings, PitelSipSettings?) fun) {
+        Null Function(SipCoreSettings, SipCoreSettings?) fun) {
       logger.debug('Check optional parameter => $parameter.');
       fun(src, dst);
     });

@@ -13,12 +13,12 @@ class VoipServiceImpl implements VoipService, SipHelperListener {
   }
 
   @override
-  Future<PitelSettings> registerSipWithoutFCM(PnPushParams pnPushParams) {
+  Future<VoipSettings> registerSipWithoutFCM(PnPushParams pnPushParams) {
     return voipClient.registerSipWithoutFCM(pnPushParams);
   }
 
   @override
-  Future<PitelSettings> setExtensionInfo(
+  Future<VoipSettings> setExtensionInfo(
     SipInfoData sipInfoData,
     PushNotifParams pushNotifParams,
   ) async {
@@ -43,12 +43,12 @@ class VoipServiceImpl implements VoipService, SipHelperListener {
 
     this.sipInfoData = sipInfoData;
     voipClient.setExtensionInfo(sipInfoData.toGetExtensionResponse());
-    final pitelSetting = await voipClient.registerSipWithoutFCM(pnPushParams);
-    return pitelSetting;
+    final voipSetting = await voipClient.registerSipWithoutFCM(pnPushParams);
+    return voipSetting;
   }
 
   @override
-  void callStateChanged(String callId, PitelCallState state) {
+  void callStateChanged(String callId, VoipCallState state) {
     if (kDebugMode) {
       print('❌ ❌ ❌ callStateChanged $callId state ${state.state.toString()}');
     }
@@ -83,7 +83,7 @@ class VoipServiceImpl implements VoipService, SipHelperListener {
   }
 
   @override
-  void transportStateChanged(PitelTransportState state) {
+  void transportStateChanged(VoipTransportState state) {
     if (kDebugMode) {
       print('❌ ❌ ❌ transportStateChanged ${state.state.toString()}');
     }

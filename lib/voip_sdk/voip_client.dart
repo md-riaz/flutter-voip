@@ -49,7 +49,7 @@ class VoipClient {
 
   bool _registerSip({String? fcmToken}) {
     if (_sipServer != null) {
-      final settings = PitelSettings();
+      final settings = VoipSettings();
       Map<String, String> _wsExtraHeaders = {
         'Origin': 'https://${_sipServer?.domain}:${_sipServer?.port}',
         'Host': '${_sipServer?.domain}:${_sipServer?.port}',
@@ -75,8 +75,8 @@ class VoipClient {
     }
   }
 
-  Future<PitelSettings> registerSipWithoutFCM(PnPushParams pnPushParams) async {
-    final settings = PitelSettings();
+  Future<VoipSettings> registerSipWithoutFCM(PnPushParams pnPushParams) async {
+    final settings = VoipSettings();
     Map<String, String> _wsExtraHeaders = {
       'Origin': 'https://${_sipServer?.domain}:${_sipServer?.port}',
       'Host': '${_sipServer?.domain}:${_sipServer?.port}',

@@ -14,9 +14,9 @@ import 'package:flutter_voip/sip/src/transports/websocket_interface.dart';
 import 'package:flutter_voip/sip/src/ua.dart';
 
 class VoipUAHelper extends EventManager {
-  PitelUA? _ua;
-  PitelSipSettings? _settings;
-  late PitelSettings _uaSettings;
+  VoipUA? _ua;
+  SipCoreSettings? _settings;
+  late VoipSettings _uaSettings;
   final Map<String?, Call> _calls = <String?, Call>{};
 
   RegistrationState _registerState =
@@ -87,7 +87,7 @@ class VoipUAHelper extends EventManager {
     return _calls[id];
   }
 
-  void start(PitelSettings uaSettings) async {
+  void start(VoipSettings uaSettings) async {
     //! WARNING
     if (_ua != null) {
       logger.warn(
@@ -97,7 +97,7 @@ class VoipUAHelper extends EventManager {
 
     _uaSettings = uaSettings;
 
-    _settings = PitelSipSettings();
+    _settings = SipCoreSettings();
     WebSocketInterface socket = WebSocketInterface(
         uaSettings.webSocketUrl, uaSettings.webSocketSettings);
     _settings!.sockets = <WebSocketInterface>[socket];
@@ -119,7 +119,7 @@ class VoipUAHelper extends EventManager {
     _settings!.ice_gathering_timeout = uaSettings.iceGatheringTimeout;
 
     try {
-      _ua = PitelUA(_settings);
+      _ua = VoipUA(_settings);
       List<String> extraHeaders = [];
       uaSettings.webSocketSettings.extraHeaders.forEach((key, value) {
         extraHeaders.add('$key: $value');
@@ -128,18 +128,18 @@ class VoipUAHelper extends EventManager {
       _ua!.on(EventSocketConnecting(), (EventSocketConnecting event) {
         logger.debug('connecting => ' + event.toString());
         _notifyTransportStateListeners(
-            PitelTransportState(TransportStateEnum.CONNECTING));
+            VoipTransportState(TransportStateEnum.CONNECTING));
       });
 
       _ua!.on(EventSocketConnected(), (EventSocketConnected event) {
         logger.debug('connected => ' + event.toString());
         _notifyTransportStateListeners(
-            PitelTransportState(TransportStateEnum.CONNECTED));
+            VoipTransportState(TransportStateEnum.CONNECTED));
       });
 
       _ua!.on(EventSocketDisconnected(), (EventSocketDisconnected event) {
         logger.debug('disconnected => ' + (event.cause.toString()));
-        _notifyTransportStateListeners(PitelTransportState(
+        _notifyTransportStateListeners(VoipTransportState(
             TransportStateEnum.DISCONNECTED,
             cause: event.cause));
       });
@@ -175,9 +175,9 @@ class VoipUAHelper extends EventManager {
               buildCallOptions()['eventHandlers'] as EventManager);
         }
         _calls[event.id] =
-            Call(event.id, session, PitelCallStateEnum.CALL_INITIATION);
+            Call(event.id, session, VoipCallStateEnum.CALL_INITIATION);
         _notifyCallStateListeners(
-            event, PitelCallState(PitelCallStateEnum.CALL_INITIATION));
+            event, VoipCallState(VoipCallStateEnum.CALL_INITIATION));
       });
 
       _ua!.on(EventNewMessage(), (EventNewMessage event) {
@@ -208,20 +208,20 @@ class VoipUAHelper extends EventManager {
     handlers.on(EventCallConnecting(), (EventCallConnecting event) {
       logger.debug('call connecting');
       _notifyCallStateListeners(
-          event, PitelCallState(PitelCallStateEnum.CONNECTING));
+          event, VoipCallState(VoipCallStateEnum.CONNECTING));
     });
     handlers.on(EventCallProgress(), (EventCallProgress event) {
       logger.debug('call is in progress');
       _notifyCallStateListeners(
           event,
-          PitelCallState(PitelCallStateEnum.PROGRESS,
+          VoipCallState(VoipCallStateEnum.PROGRESS,
               originator: event.originator));
     });
     handlers.on(EventCallFailed(), (EventCallFailed event) {
       logger.debug('call failed with cause: ' + (event.cause.toString()));
       _notifyCallStateListeners(
           event,
-          PitelCallState(PitelCallStateEnum.FAILED,
+          VoipCallState(VoipCallStateEnum.FAILED,
               originator: event.originator, cause: event.cause));
       _calls.remove(event.id);
     });
@@ -229,46 +229,46 @@ class VoipUAHelper extends EventManager {
       logger.debug('call ended with cause: ' + (event.cause.toString()));
       _notifyCallStateListeners(
           event,
-          PitelCallState(PitelCallStateEnum.ENDED,
+          VoipCallState(VoipCallStateEnum.ENDED,
               originator: event.originator, cause: event.cause));
       _calls.remove(event.id);
     });
     handlers.on(EventCallAccepted(), (EventCallAccepted event) {
       logger.debug('call accepted');
       _notifyCallStateListeners(
-          event, PitelCallState(PitelCallStateEnum.ACCEPTED));
+          event, VoipCallState(VoipCallStateEnum.ACCEPTED));
     });
     handlers.on(EventCallConfirmed(), (EventCallConfirmed event) {
       logger.debug('call confirmed');
       _notifyCallStateListeners(
-          event, PitelCallState(PitelCallStateEnum.CONFIRMED));
+          event, VoipCallState(VoipCallStateEnum.CONFIRMED));
     });
     handlers.on(EventCallHold(), (EventCallHold event) {
       logger.debug('call hold');
       _notifyCallStateListeners(
           event,
-          PitelCallState(PitelCallStateEnum.HOLD,
+          VoipCallState(VoipCallStateEnum.HOLD,
               originator: event.originator));
     });
     handlers.on(EventCallUnhold(), (EventCallUnhold event) {
       logger.debug('call unhold');
       _notifyCallStateListeners(
           event,
-          PitelCallState(PitelCallStateEnum.UNHOLD,
+          VoipCallState(VoipCallStateEnum.UNHOLD,
               originator: event.originator));
     });
     handlers.on(EventCallMuted(), (EventCallMuted event) {
       logger.debug('call muted');
       _notifyCallStateListeners(
           event,
-          PitelCallState(PitelCallStateEnum.MUTED,
+          VoipCallState(VoipCallStateEnum.MUTED,
               audio: event.audio ?? false, video: event.video ?? false));
     });
     handlers.on(EventCallUnmuted(), (EventCallUnmuted event) {
       logger.debug('call unmuted');
       _notifyCallStateListeners(
           event,
-          PitelCallState(PitelCallStateEnum.UNMUTED,
+          VoipCallState(VoipCallStateEnum.UNMUTED,
               audio: event.audio ?? false, video: event.video ?? false));
     });
     handlers.on(EventStream(), (EventStream event) async {
@@ -276,14 +276,14 @@ class VoipUAHelper extends EventManager {
       Timer(const Duration(milliseconds: 100), () {
         _notifyCallStateListeners(
             event,
-            PitelCallState(PitelCallStateEnum.STREAM,
+            VoipCallState(VoipCallStateEnum.STREAM,
                 stream: event.stream, originator: event.originator));
       });
     });
     handlers.on(EventCallRefer(), (EventCallRefer refer) async {
       logger.debug('Refer received, Transfer current call to => ${refer.aor}');
       _notifyCallStateListeners(
-          refer, PitelCallState(PitelCallStateEnum.REFER, refer: refer));
+          refer, VoipCallState(VoipCallStateEnum.REFER, refer: refer));
       //Always accept.
       refer.accept((RTCSession session) {
         logger.debug('session initialized.');
@@ -356,7 +356,7 @@ class VoipUAHelper extends EventManager {
     _sipUaHelperListeners.remove(listener);
   }
 
-  void _notifyTransportStateListeners(PitelTransportState state) {
+  void _notifyTransportStateListeners(VoipTransportState state) {
     for (var listener in _sipUaHelperListeners) {
       listener.transportStateChanged(state);
     }
@@ -368,7 +368,7 @@ class VoipUAHelper extends EventManager {
     }
   }
 
-  void _notifyCallStateListeners(CallEvent event, PitelCallState state) {
+  void _notifyCallStateListeners(CallEvent event, VoipCallState state) {
     Call? call = _calls[event.id];
     if (call == null) {
       logger.e('Call ${event.id} not found!');
