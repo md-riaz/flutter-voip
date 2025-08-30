@@ -58,7 +58,11 @@ class _MessagingDemoState extends State<MessagingDemo>
     final user = _userCtrl.text.trim();
     final pass = _passCtrl.text;
     final wss = _wssCtrl.text.trim();
-    if (domain.isEmpty || port.isEmpty || user.isEmpty || pass.isEmpty || wss.isEmpty) {
+    if (domain.isEmpty ||
+        port.isEmpty ||
+        user.isEmpty ||
+        pass.isEmpty ||
+        wss.isEmpty) {
       _toast('Please fill all connection fields');
       return;
     }
@@ -68,9 +72,8 @@ class _MessagingDemoState extends State<MessagingDemo>
     settings.uri = 'sip:$user@$domain:$port';
     settings.authorizationUser = user;
     settings.password = pass;
-    settings.displayName = _displayCtrl.text.trim().isEmpty
-        ? user
-        : _displayCtrl.text.trim();
+    settings.displayName =
+        _displayCtrl.text.trim().isEmpty ? user : _displayCtrl.text.trim();
     settings.userAgent = 'Flutter VoIP Example';
     settings.sipDomain = '$domain:$port';
     _ua.start(settings);
@@ -84,7 +87,7 @@ class _MessagingDemoState extends State<MessagingDemo>
     final port = _portCtrl.text.trim();
     if (to.isEmpty) return _toast('Enter destination user');
     final target = to.contains('sip:') ? to : 'sip:$to@$domain:$port';
-    final msg = _ua.sendMessage(target, _bodyCtrl.text, {'contentType': 'text/plain'});
+    _ua.sendMessage(target, _bodyCtrl.text, {'contentType': 'text/plain'});
     setState(() {
       _log.insert(0, 'Sent MESSAGE to $target: ${_bodyCtrl.text}');
     });
@@ -128,7 +131,8 @@ class _MessagingDemoState extends State<MessagingDemo>
                 _sectionTitle('SIP Connection'),
                 _rowField('WSS URL', _wssCtrl, hint: 'wss://host:port'),
                 _rowField('Domain', _domainCtrl, hint: 'example.com'),
-                _rowField('Port', _portCtrl, keyboardType: TextInputType.number),
+                _rowField('Port', _portCtrl,
+                    keyboardType: TextInputType.number),
                 _rowField('Username', _userCtrl),
                 _rowField('Password', _passCtrl, obscureText: true),
                 _rowField('Display Name', _displayCtrl),
@@ -186,9 +190,7 @@ class _MessagingDemoState extends State<MessagingDemo>
       );
 
   Widget _rowField(String label, TextEditingController controller,
-      {String? hint,
-      TextInputType? keyboardType,
-      bool obscureText = false}) {
+      {String? hint, TextInputType? keyboardType, bool obscureText = false}) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: Column(

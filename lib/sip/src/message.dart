@@ -58,8 +58,9 @@ class Message extends EventManager {
       throw Exceptions.TypeError('Invalid target: $originalTarget');
     }
 
-    // Get call options.
-    List<dynamic> extraHeaders = Utils.cloneArray(options['extraHeaders']);
+    // Get call options. Ensure extraHeaders is a list.
+    List<dynamic> extraHeaders =
+        Utils.cloneArray(options['extraHeaders'] ?? <dynamic>[]);
     EventManager eventHandlers = options['eventHandlers'] ?? EventManager();
     String contentType = options['contentType'] ?? 'text/plain';
 
@@ -111,7 +112,8 @@ class Message extends EventManager {
    * Only valid for incoming Messages
    */
   void accept(Map<String, dynamic> options) {
-    List<dynamic> extraHeaders = Utils.cloneArray(options['extraHeaders']);
+    List<dynamic> extraHeaders =
+        Utils.cloneArray(options['extraHeaders'] ?? <dynamic>[]);
     String? body = options['body'];
 
     if (_direction != 'incoming') {
@@ -134,7 +136,8 @@ class Message extends EventManager {
   void reject(Map<String, dynamic> options) {
     int status_code = options['status_code'] ?? 480;
     String? reason_phrase = options['reason_phrase'];
-    List<dynamic> extraHeaders = Utils.cloneArray(options['extraHeaders']);
+    List<dynamic> extraHeaders =
+        Utils.cloneArray(options['extraHeaders'] ?? <dynamic>[]);
     String? body = options['body'];
 
     if (_direction != 'incoming') {

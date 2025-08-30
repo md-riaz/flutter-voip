@@ -285,23 +285,23 @@ class VoipUA extends EventManager {
     // If there are session wait a bit so CANCEL/BYE can be sent and their responses received.
     int num_sessions = _sessions.length;
 
-    // Run  _terminate_ on every Session.
-    _sessions.forEach((String? key, _) {
-      if (_sessions.containsKey(key)) {
-        logger.debug('closing session $key');
-        try {
-          RTCSession rtcSession = _sessions[key]!;
-          if (!rtcSession.isEnded()) {
-            rtcSession.terminate();
-          }
-        } catch (error, s) {
-          Log.e(error.toString(), null, s);
+    // Run  _terminate_ on every Session using a snapshot of keys to
+    // avoid concurrent modification while sessions remove themselves.
+    for (final String? key in List<String?>.from(_sessions.keys)) {
+      logger.debug('closing session $key');
+      try {
+        final RTCSession? rtcSession = _sessions[key];
+        if (rtcSession != null && !rtcSession.isEnded()) {
+          rtcSession.terminate();
         }
+      } catch (error, s) {
+        Log.e(error.toString(), null, s);
       }
-    });
+    }
 
-    // Run  _close_ on every applicant.
-    for (Message message in _applicants) {
+    // Run  _close_ on every applicant using a snapshot to avoid
+    // ConcurrentModificationError when close() alters the set.
+    for (final Message message in List<Message>.from(_applicants)) {
       try {
         message.close();
       } catch (error) {}

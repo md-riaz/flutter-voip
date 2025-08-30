@@ -1,5 +1,7 @@
-import 'dart:html';
-import 'dart:js_util' as JSUtils;
+import 'dart:js_interop';
+import 'dart:typed_data';
+
+import 'package:web/web.dart';
 
 import '../logger.dart';
 import '../sip_ua_helper.dart';
@@ -22,16 +24,17 @@ class WebSocketImpl {
       required WebSocketSettings webSocketSettings}) async {
     logger.info('connect $_url, ${webSocketSettings.extraHeaders}, $protocols');
     try {
-      _socket = WebSocket(_url, 'sip');
+      _socket = WebSocket(_url, 'sip'.toJS);
       _socket!.onOpen.listen((Event e) {
         onOpen?.call();
       });
 
       _socket!.onMessage.listen((MessageEvent e) async {
         if (e.data is Blob) {
-          dynamic arrayBuffer = await JSUtils.promiseToFuture(
-              JSUtils.callMethod(e.data, 'arrayBuffer', <Object>[]));
-          String message = String.fromCharCodes(arrayBuffer.asUint8List());
+          final arrayBuffer = await (e.data as Blob).arrayBuffer().toDart;
+          final byteBuffer = arrayBuffer as ByteBuffer;
+          final uint8List = Uint8List.view(byteBuffer);
+          String message = String.fromCharCodes(uint8List);
           onMessage?.call(message);
         } else {
           onMessage?.call(e.data);

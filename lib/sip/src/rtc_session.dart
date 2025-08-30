@@ -262,9 +262,11 @@ class RTCSession extends EventManager {
     options = options ?? <String, dynamic>{};
     dynamic originalTarget = target;
     EventManager eventHandlers = options['eventHandlers'] ?? EventManager();
-    List<dynamic> extraHeaders = utils.cloneArray(options['extraHeaders']);
+    List<dynamic> extraHeaders =
+        utils.cloneArray(options['extraHeaders'] ?? <dynamic>[]);
+    // Default to audio-only to avoid unnecessary camera permission prompts.
     Map<String, dynamic> mediaConstraints = options['mediaConstraints'] ??
-        <String, dynamic>{'audio': true, 'video': true};
+        <String, dynamic>{'audio': true, 'video': false};
     MediaStream? mediaStream = options['mediaStream'];
     Map<String, dynamic> pcConfig =
         options['pcConfig'] ?? <String, dynamic>{'iceServers': <dynamic>[]};
@@ -459,7 +461,8 @@ class RTCSession extends EventManager {
   void answer(Map<String, dynamic> options) async {
     logger.debug('answer()');
     dynamic request = _request;
-    List<dynamic> extraHeaders = utils.cloneArray(options['extraHeaders']);
+    List<dynamic> extraHeaders =
+        utils.cloneArray(options['extraHeaders'] ?? <dynamic>[]);
     Map<String, dynamic> mediaConstraints =
         options['mediaConstraints'] ?? <String, dynamic>{};
     MediaStream? mediaStream = options['mediaStream'] ?? null;
@@ -566,9 +569,9 @@ class RTCSession extends EventManager {
       mediaConstraints['audio'] = peerOffersFullAudio;
     }
 
-    // Set video constraints based on incoming stream if not supplied.
+    // Set video constraints if not supplied: default to false (audio-only by default).
     if (mediaStream == null && mediaConstraints['video'] == null) {
-      mediaConstraints['video'] = peerOffersFullVideo;
+      mediaConstraints['video'] = false;
     }
 
     // Don't ask for audio if the incoming offer has no audio section.
@@ -1794,7 +1797,8 @@ class RTCSession extends EventManager {
 
       int status_code = options['status_code'] ?? 403;
       String reason_phrase = options['reason_phrase'] ?? '';
-      List<dynamic> extraHeaders = utils.cloneArray(options['extraHeaders']);
+      List<dynamic> extraHeaders =
+          utils.cloneArray(options['extraHeaders'] ?? <dynamic>[]);
 
       if (_status != C.statusConfirmed) {
         return false;
@@ -1882,7 +1886,8 @@ class RTCSession extends EventManager {
 
       int status_code = options['status_code'] ?? 403;
       String reason_phrase = options['reason_phrase'] ?? '';
-      List<dynamic> extraHeaders = utils.cloneArray(options['extraHeaders']);
+      List<dynamic> extraHeaders =
+          utils.cloneArray(options['extraHeaders'] ?? <dynamic>[]);
 
       if (_status != C.statusConfirmed) {
         return false;
@@ -2060,7 +2065,8 @@ class RTCSession extends EventManager {
         String replaces = utils
             .decodeURIComponent(request.refer_to.uri.getHeader('replaces'));
 
-        options['extraHeaders'] = utils.cloneArray(options['extraHeaders']);
+        options['extraHeaders'] =
+            utils.cloneArray(options['extraHeaders'] ?? <dynamic>[]);
         options['extraHeaders'].add('Replaces: $replaces');
       }
       session.connect(request.refer_to.uri.toAor(), options, initCallback);
