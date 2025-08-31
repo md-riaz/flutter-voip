@@ -51,17 +51,17 @@ class PushNotifAndroid {
   }
 
   static Future<String> getDeviceToken() async {
-    final FirebaseMessaging fcm = FirebaseMessaging.instance;
-    var deviceToken = "";
     try {
+      final FirebaseMessaging fcm = FirebaseMessaging.instance;
       final token = await fcm.getToken();
-      deviceToken = token.toString();
+      return token ?? '';
     } catch (error) {
       if (kDebugMode) {
-        print(error);
+        print('FCM getDeviceToken skipped: ' + error.toString());
       }
+      // Return empty token when Firebase is not initialized or unavailable.
+      return '';
     }
-    return deviceToken;
   }
 
   @pragma('vm:entry-point')
@@ -127,10 +127,17 @@ class VoipPushIOS {
 
 class PushVoipNotif {
   static Future<String> getDeviceToken() async {
-    final deviceToken = Platform.isAndroid
-        ? await PushNotifAndroid.getDeviceToken()
-        : await VoipPushIOS.getVoipDeviceToken();
-    return deviceToken;
+    try {
+      final deviceToken = Platform.isAndroid
+          ? await PushNotifAndroid.getDeviceToken()
+          : await VoipPushIOS.getVoipDeviceToken();
+      return deviceToken;
+    } catch (e) {
+      if (kDebugMode) {
+        print('VoIP device token skipped: ' + e.toString());
+      }
+      return '';
+    }
   }
 
   static Future<String> getFCMToken() async {
@@ -138,4 +145,3 @@ class PushVoipNotif {
     return fcmToken;
   }
 }
-

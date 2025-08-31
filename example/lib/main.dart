@@ -5,9 +5,12 @@ import 'demos/call_controls_demo.dart';
 import 'demos/messaging_demo.dart';
 import 'demos/video_demo.dart';
 import 'demos/screens_demo.dart';
+import 'full_app/full_voip_app.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // Skipping Firebase initialization by default to support example token
+  // usage without requiring google-services. Enable from Push tab if needed.
   runApp(const DemoSipApp());
 }
 
@@ -36,6 +39,7 @@ class DemoMenuPage extends StatelessWidget {
       _DemoTile('Messaging (SIP MESSAGE)', const MessagingDemo()),
       _DemoTile('Video Call (local/remote views)', const VideoDemo()),
       _DemoTile('Prebuilt Screens + SDK wiring', const ScreensDemo()),
+      _DemoTile('Full VoIP App (push + background)', const FullVoipApp()),
     ];
 
     return Scaffold(
